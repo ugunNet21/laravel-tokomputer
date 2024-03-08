@@ -6,6 +6,71 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
+```bash
+
+Untuk mendata service laptop dalam sebuah sistem basis data, kita bisa membangun beberapa tabel yang saling terhubung untuk mengelola informasi mengenai pelanggan, laptop, servis, teknisi, dan potensi detail lainnya. Berikut ini adalah contoh sederhana dari struktur tabel dan relasinya:
+
+Tabel-tabel Utama:
+Tabel Pelanggan (Customers)
+
+CustomerID (PK)
+Nama
+Alamat
+NoTelepon
+Email
+Tabel Laptop (Laptops)
+
+LaptopID (PK)
+CustomerID (FK)
+Merk
+Model
+SerialNumber
+Tabel Servis (Services)
+
+ServiceID (PK)
+LaptopID (FK)
+TanggalMasuk
+TanggalSelesai
+DeskripsiMasalah
+Status (misal: dalam antrian, sedang diperbaiki, selesai)
+TotalBiaya
+Tabel Teknisi (Technicians)
+
+TechnicianID (PK)
+Nama
+Spesialisasi
+Kontak
+Tabel DetailServis (ServiceDetails)
+
+DetailID (PK)
+ServiceID (FK)
+TechnicianID (FK)
+KeteranganTindakan
+Biaya
+Relasi antar Tabel:
+Pelanggan dan Laptop: Seorang pelanggan bisa memiliki satu atau lebih laptop. Ini adalah relasi satu-ke-banyak dari Pelanggan ke Laptop (one-to-many). Setiap laptop terdaftar memiliki eksak satu pemilik/pelanggan, tetapi satu pelanggan bisa memiliki banyak laptop.
+
+Laptop dan Servis: Setiap entri servis terkait dengan satu laptop. Ini adalah relasi satu-ke-banyak dari Laptop ke Servis (one-to-many). Satu laptop bisa memiliki beberapa catatan servis sepanjang waktu.
+
+Servis dan DetailServis: Untuk setiap servis, bisa jadi terdapat beberapa langkah atau tindakan perbaikan yang dilakukan. Ini menciptakan relasi satu-ke-banyak dari Servis ke DetailServis (one-to-many), dimana satu servis bisa memiliki beberapa detail servis.
+
+Teknisi dan DetailServis: Setiap tindakan atau detail servis yang dilakukan bisa dikaitkan dengan teknisi yang bertanggung jawab. Ini adalah relasi banyak-ke-banyak antara Teknisi dan DetailServis (many-to-many), yang biasanya diimplementasikan dengan menggunakan tabel DetailServis sebagai tabel penghubung yang menyimpan TechnicianID.
+
+Catatan Implementasi:
+PrimaryKey (PK) digunakan untuk mengidentifikasi setiap baris di dalam tabel secara unik.
+ForeignKey (FK) digunakan untuk menyatakan relasi antar tabel, dimana kunci asing di tabel anak mengacu pada kunci utama di tabel orang tua.
+Mekanisme INDEX mungkin diperlukan pada kolom-kolom yang sering menjadi target pencarian atau join untuk meningkatkan performa query.
+Pertimbangkan juga aspek keamanan dan privasi data, terutama untuk informasi pelanggan.
+```
+## Membuat model
+```bash
+php artisan make:model Customer -m
+php artisan make:model Laptop -m
+php artisan make:model Service -m
+php artisan make:model Technician -m
+php artisan make:model ServiceDetail -m
+
+```
 
 ## About Laravel
 
